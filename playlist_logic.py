@@ -12,41 +12,65 @@ DEFAULT_PROFILE = {
 }
 
 
+def _to_str(value: object) -> str:
+    """Safely convert a value to a string; None -> ''."""
+    if value is None:
+        return ""
+    return str(value)
+
+
+def _to_int(value: object, default: int = 0) -> int:
+    """Safely convert a value to int, returning default on failure."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _to_tags(value: object) -> List[str]:
+    """Normalize tags into a list of strings."""
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value]
+    try:
+        return list(value)
+    except TypeError:
+        return []
+
+
 def normalize_title(title: str) -> str:
     """Normalize a song title for comparisons."""
-    if not isinstance(title, str):
+    if title is None:
         return ""
-    return title.strip()
+    t = _to_str(title)
+    return t.strip()
 
 
 def normalize_artist(artist: str) -> str:
     """Normalize an artist name for comparisons."""
-    if not artist:
+    if artist is None:
         return ""
-    return artist.strip().lower()
+    a = _to_str(artist)
+    return a.strip().lower()
 
 
 def normalize_genre(genre: str) -> str:
     """Normalize a genre name for comparisons."""
-    return genre.lower().strip()
+    if genre is None:
+        return ""
+    g = _to_str(genre)
+    return g.lower().strip()
 
 
 def normalize_song(raw: Song) -> Song:
     """Return a normalized song dict with expected keys."""
-    title = normalize_title(str(raw.get("title", "")))
-    artist = normalize_artist(str(raw.get("artist", "")))
-    genre = normalize_genre(str(raw.get("genre", "")))
-    energy = raw.get("energy", 0)
+    title = normalize_title(raw.get("title", ""))
+    artist = normalize_artist(raw.get("artist", ""))
+    genre = normalize_genre(raw.get("genre", ""))
+    energy = _to_int(raw.get("energy", 0), default=0)
 
-    if isinstance(energy, str):
-        try:
-            energy = int(energy)
-        except ValueError:
-            energy = 0
-
-    tags = raw.get("tags", [])
-    if isinstance(tags, str):
-        tags = [tags]
+    tags = _to_tags(raw.get("tags", []))
 
     return {
         "title": title,
