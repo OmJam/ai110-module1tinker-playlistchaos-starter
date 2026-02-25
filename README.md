@@ -1,3 +1,6 @@
+# TF Weekly Task 1
+The core concept that students will take away from this activity is getting more familiar with AI. We go over how to ask it questions to solidify our understanding of what the code is doing and why, and how to let AI give suggestions on how to fix the code. I think students will stuggle the most coming up with a meaningful prompt which is difficult in the beginning to get used to for everyone. It's really important to give it all the relavant context you can and what you expect. The Ai was really useful making changes to the code and showing where it was making those changes. It can sometimes be misleading when it explains what it did and why. To not give students the answer right away is to ask the AI to help you learn using a Socratic learning method, this way the AI can ask questions and the student can reply. I would suggest the student to first try to understand the problem and background of the problem they are trying to solve before tackling it or prompting AI.
+
 # Playlist Chaos
 
 Your AI assistant tried to build a smart playlist generator. The app runs, but some of the behavior is unpredictable. Your task is to explore the app, investigate the code, and use an AI assistant to debug and improve it.
